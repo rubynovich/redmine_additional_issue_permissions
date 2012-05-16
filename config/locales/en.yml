@@ -1,3 +1,22 @@
 # English strings go here for Rails i18n
 en:
-  my_label: "My label"
+  permission_edit_status_4author: "Edit status of the issue author"
+  permission_edit_status_4assigned_to: "Edit status of the issue executor"
+  
+  permission_edit_start_date_4author: "Edit start date of the issue author"
+  permission_edit_start_date_4assigned_to: "Edit start date of the issue executor"
+  
+  permission_edit_due_date_4author: "Edit due date of the issue author"
+  permission_edit_due_date_4assigned_to: "Edit due date of the issue executor"
+  
+  permission_edit_assigned_to_4author: "Edit assigned_to of the issue author"
+  permission_edit_assigned_to_4assigned_to: "Edit assigned_to of the issue executor"
+       
+  permission_edit_parent_issue_4author: "Edit parent issue of the issue author"
+  permission_edit_parent_issue_4assigned_to: "Edit parent issue of the issue executor"
+
+  permission_edit_done_ratio_4author: "Edit done ratio of the issue author"
+  permission_edit_done_ratio_4assigned_to: "Edit done ratio of the issue executor"
+  
+  permission_edit_estimated_hours_4author: "Edit estimated hours of the issue author"
+  permission_edit_estimated_hours_4assigned_to: "Edit estimated hours of the issue executor"

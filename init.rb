@@ -1,11 +1,17 @@
 require 'redmine'
+require 'dispatcher'
+require_dependency 'issue_patch'
+
+Dispatcher.to_prepare do
+  Issue.send(:include, IssuePatch) unless Issue.include? IssuePatch
+end
 
 Redmine::Plugin.register :redmine_additional_issue_permissions do
   name 'Redmine Additional Issue Permissions plugin'
   author 'Roman Shipiev'
-  description 'Redmine plugin for add 14 new issue permissions (edit)'
-  version '0.0.1'
-  url 'https://github.com/rubynovich/redmine_secretary'
+  description 'Redmine plugin adding 14 new issue permissions (for edit)'
+  version '0.0.2'
+  url 'https://github.com/rubynovich/redmine_additional_issue_permissions'
   author_url 'http://roman.shipiev.me'
   
   project_module :issue_tracking do

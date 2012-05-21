@@ -10,7 +10,7 @@ Redmine::Plugin.register :redmine_additional_issue_permissions do
   name 'Redmine Additional Issue Permissions plugin'
   author 'Roman Shipiev'
   description 'Redmine plugin adding 21 new issue permissions (for edit issue)'
-  version '0.0.2'
+  version '0.0.3'
   url 'https://github.com/rubynovich/redmine_additional_issue_permissions'
   author_url 'http://roman.shipiev.me'
   

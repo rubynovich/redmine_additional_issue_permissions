@@ -1,22 +1,29 @@
 # Russian strings go here for Rails i18n
 ru:
+  permission_edit_status: "Правка статуса"
   permission_edit_status_4author: "Правка статуса автором"
   permission_edit_status_4assigned_to: "Правка статуса исполнителем"
-  
+
+  permission_edit_start_date: "Правка даты начала"  
   permission_edit_start_date_4author: "Правка даты начала автором"
   permission_edit_start_date_4assigned_to: "Правка даты начала исполнителем"
-  
+
+  permission_edit_due_date: "Правка даты выполнения"  
   permission_edit_due_date_4author: "Правка даты выполнения автором"
   permission_edit_due_date_4assigned_to: "Правка даты выполнения исполнителем"
-  
+
+  permission_edit_assigned_to: "Правка поля 'Назначена'"  
   permission_edit_assigned_to_4author: "Правка поля 'Назначена' автором"
   permission_edit_assigned_to_4assigned_to: "Правка поля 'Назначена' исполнителем"
-       
+
+  permission_edit_parent_issue: "Правка поля 'Родительская задача'"
   permission_edit_parent_issue_4author: "Правка поля 'Родительская задача' автором"
   permission_edit_parent_issue_4assigned_to: "Правка поля 'Родительская задача' исполнителем"
 
+  permission_edit_done_ratio: "Правка готовности"
   permission_edit_done_ratio_4author: "Правка готовности автором"
   permission_edit_done_ratio_4assigned_to: "Правка готовности исполнителем"
-  
+
+  permission_edit_estimated_hours: "Правка оценки времени"  
   permission_edit_estimated_hours_4author: "Правка оценки времени автором"
   permission_edit_estimated_hours_4assigned_to: "Правка оценки времени исполнителем"

@@ -15,6 +15,9 @@ module IssuePatch
           elsif user == issue.author
             user.allowed_to?(:edit_status_4author, 
               issue.project)
+          else
+            user.allowed_to?(:edit_status, 
+              issue.project)
           end
         }
       safe_attributes 'assigned_to_id',
@@ -24,6 +27,9 @@ module IssuePatch
               issue.project)
           elsif user == issue.author
             user.allowed_to?(:edit_assigned_to_4author, 
+              issue.project)
+          else
+            user.allowed_to?(:edit_assigned_to, 
               issue.project)
           end
         }
@@ -35,6 +41,9 @@ module IssuePatch
           elsif user == issue.author
             user.allowed_to?(:edit_done_ratio_4author, 
               issue.project)
+          else
+            user.allowed_to?(:edit_done_ratio, 
+              issue.project)           
           end
         }
       safe_attributes 'start_date',
@@ -45,6 +54,9 @@ module IssuePatch
           elsif user == issue.author
             user.allowed_to?(:edit_start_date_4author, 
               issue.project)
+          else
+            user.allowed_to?(:edit_start_date, 
+              issue.project)            
           end
         }
       safe_attributes 'due_date',
@@ -55,6 +67,9 @@ module IssuePatch
           elsif user == issue.author
             user.allowed_to?(:edit_due_date_4author, 
               issue.project)
+          else
+            user.allowed_to?(:edit_due_date, 
+              issue.project)              
           end
         }
       safe_attributes 'parent_issue_id',
@@ -65,6 +80,9 @@ module IssuePatch
           elsif user == issue.author
             user.allowed_to?(:edit_parent_issue_4author, 
               issue.project)
+          else
+            user.allowed_to?(:edit_parent_issue, 
+              issue.project)          
           end
         }
       safe_attributes 'estimated_hours', 
@@ -75,6 +93,9 @@ module IssuePatch
           elsif user == issue.author
             user.allowed_to?(:edit_estimated_hours_4author, 
               issue.project)
+          else              
+            user.allowed_to?(:edit_estimated_hours, 
+              issue.project)          
           end
         }
     end
@@ -92,7 +113,7 @@ module IssuePatch
         ) || (
           (user == self.author) &&
             (user.allowed_to?(:"edit_#{field}_4author", self.project))
-        )
+        ) || user.allowed_to?(:"edit_#{field}", self.project)
       }
     end
     
@@ -102,7 +123,9 @@ module IssuePatch
       elsif user == self.assigned_to
         user.allowed_to?(:edit_status_4assigned_to, self.project)
       else
-        self.new_record? || user.allowed_to?(:edit_issues, self.project)
+        self.new_record? || 
+          user.allowed_to?(:edit_issues, self.project) ||
+          user.allowed_to?(:edit_status, self.project)
       end
     end
     
@@ -112,8 +135,10 @@ module IssuePatch
       elsif user == self.assigned_to
         user.allowed_to?(:edit_assigned_to_4assigned_to, self.project)
       else
-        self.new_record? || user.allowed_to?(:edit_issues, self.project)
-      end      
+        self.new_record? || 
+          user.allowed_to?(:edit_issues, self.project) ||
+          user.allowed_to?(:edit_assigned_to, self.project)
+      end
     end
     
     def done_ratio_allowed?(user=User.current)
@@ -122,8 +147,10 @@ module IssuePatch
       elsif user == self.assigned_to
         user.allowed_to?(:edit_done_ratio_4assigned_to, self.project)
       else
-        self.new_record? || user.allowed_to?(:edit_issues, self.project)
-      end      
+        self.new_record? || 
+          user.allowed_to?(:edit_issues, self.project) ||
+          user.allowed_to?(:edit_done_ratio, self.project)
+      end
     end
   end
 end

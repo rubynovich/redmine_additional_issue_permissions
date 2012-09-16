@@ -9,94 +9,80 @@ module IssuePatch
     base.class_eval do      
       safe_attributes 'status_id', 
         :if => lambda {|issue, user|
-          if user == issue.assigned_to
-            user.allowed_to?(:edit_status_4assigned_to, 
-              issue.project)
-          elsif user == issue.author
-            user.allowed_to?(:edit_status_4author, 
-              issue.project)
-          else
-            user.allowed_to?(:edit_status, 
-              issue.project)
-          end
+          (
+            (user == issue.assigned_to) && 
+              user.allowed_to?(:edit_status_4assigned_to, issue.project)
+          ) || (
+            (user == issue.author) &&
+              user.allowed_to?(:edit_status_4author, issue.project)
+          ) ||
+            user.allowed_to?(:edit_status, issue.project)
         }
       safe_attributes 'assigned_to_id',
         :if => lambda {|issue, user| 
-          if user == issue.assigned_to
-            user.allowed_to?(:edit_assigned_to_4assigned_to, 
-              issue.project)
-          elsif user == issue.author
-            user.allowed_to?(:edit_assigned_to_4author, 
-              issue.project)
-          else
-            user.allowed_to?(:edit_assigned_to, 
-              issue.project)
-          end
+          (
+            (user == issue.assigned_to) && 
+              user.allowed_to?(:edit_assigned_to_4assigned_to, issue.project)
+          ) || (
+            (user == issue.author) &&
+              user.allowed_to?(:edit_assigned_to_4author, issue.project)
+          ) ||
+            user.allowed_to?(:edit_assigned_to, issue.project)
         }
       safe_attributes 'done_ratio',
         :if => lambda {|issue, user|
-          if user == issue.assigned_to
-            user.allowed_to?(:edit_done_ratio_4assigned_to, 
-              issue.project)
-          elsif user == issue.author
-            user.allowed_to?(:edit_done_ratio_4author, 
-              issue.project)
-          else
-            user.allowed_to?(:edit_done_ratio, 
-              issue.project)           
-          end
+          (
+            (user == issue.assigned_to) && 
+              user.allowed_to?(:edit_done_ratio_4assigned_to, issue.project)
+          ) || (
+            (user == issue.author) &&
+              user.allowed_to?(:edit_done_ratio_4author, issue.project)
+          ) ||
+            user.allowed_to?(:edit_done_ratio, issue.project)
         }
       safe_attributes 'start_date',
         :if => lambda {|issue, user|
-          if user == issue.assigned_to
-            user.allowed_to?(:edit_start_date_4assigned_to, 
-              issue.project)
-          elsif user == issue.author
-            user.allowed_to?(:edit_start_date_4author, 
-              issue.project)
-          else
-            user.allowed_to?(:edit_start_date, 
-              issue.project)            
-          end
+          (
+            (user == issue.assigned_to) && 
+              user.allowed_to?(:edit_start_date_4assigned_to, issue.project)
+          ) || (
+            (user == issue.author) &&
+              user.allowed_to?(:edit_start_date_4author, issue.project)
+          ) ||
+            user.allowed_to?(:edit_start_date, issue.project)
         }
       safe_attributes 'due_date',
         :if => lambda {|issue, user| 
-          if user == issue.assigned_to
-            user.allowed_to?(:edit_due_date_4assigned_to, 
-              issue.project)
-          elsif user == issue.author
-            user.allowed_to?(:edit_due_date_4author, 
-              issue.project)
-          else
-            user.allowed_to?(:edit_due_date, 
-              issue.project)              
-          end
+          (
+            (user == issue.assigned_to) && 
+              user.allowed_to?(:edit_due_date_4assigned_to, issue.project)
+          ) || (
+            (user == issue.author) &&
+              user.allowed_to?(:edit_due_date_4author, issue.project)
+          ) ||
+            user.allowed_to?(:edit_due_date, issue.project)
         }
       safe_attributes 'parent_issue_id',
         :if => lambda {|issue, user|
-          if user == issue.assigned_to
-            user.allowed_to?(:edit_parent_issue_4assigned_to, 
-              issue.project)
-          elsif user == issue.author
-            user.allowed_to?(:edit_parent_issue_4author, 
-              issue.project)
-          else
-            user.allowed_to?(:edit_parent_issue, 
-              issue.project)          
-          end
+          (
+            (user == issue.assigned_to) && 
+              user.allowed_to?(:edit_parent_issue_4assigned_to, issue.project)
+          ) || (
+            (user == issue.author) &&
+              user.allowed_to?(:edit_parent_issue_4author, issue.project)
+          ) ||
+            user.allowed_to?(:edit_parent_issue, issue.project)
         }
       safe_attributes 'estimated_hours', 
         :if => lambda {|issue, user| 
-          if user == issue.assigned_to
-            user.allowed_to?(:edit_estimated_hours_4assigned_to, 
-              issue.project)
-          elsif user == issue.author
-            user.allowed_to?(:edit_estimated_hours_4author, 
-              issue.project)
-          else              
-            user.allowed_to?(:edit_estimated_hours, 
-              issue.project)          
-          end
+          (
+            (user == issue.assigned_to) && 
+              user.allowed_to?(:edit_estimated_hours_4assigned_to, issue.project)
+          ) || (
+            (user == issue.author) &&
+              user.allowed_to?(:edit_estimated_hours_4author, issue.project)
+          ) ||
+            user.allowed_to?(:edit_estimated_hours, issue.project)        
         }
     end
   end

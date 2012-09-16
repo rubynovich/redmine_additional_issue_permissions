@@ -6,7 +6,9 @@ module IssuePatch
     
     base.send(:include, InstanceMethods)
     
-    base.class_eval do      
+    base.class_eval do
+      validates_presence_of :assigned_to_id, :due_date
+            
       safe_attributes 'status_id', 
         :if => lambda {|issue, user|
           (

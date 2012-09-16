@@ -15,7 +15,7 @@
 
       - if @issue.assigned_to_allowed?
         %p
-          = f.select :assigned_to_id, principals_options_for_select(@issue.assignable_users, @issue.assigned_to), :include_blank => true
+          = f.select :assigned_to_id, principals_options_for_select(@issue.assignable_users, @issue.assigned_to), :include_blank => true, :required => true
 
       - if @issue.safe_attribute?('category_id') && @issue.project.issue_categories.any?
         %p
@@ -44,7 +44,7 @@
 
       - if @issue.safe_attribute? 'due_date'
         %p
-          = f.text_field :due_date, :size => 10
+          = f.text_field :due_date, :size => 10, :required => true
           = calendar_for('issue_due_date')
 
       - if @issue.safe_attribute? 'estimated_hours'

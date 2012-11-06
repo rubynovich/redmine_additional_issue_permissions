@@ -1,16 +1,29 @@
 require 'redmine'
-require 'dispatcher'
-require_dependency 'issue_patch'
 
-Dispatcher.to_prepare do
-  Issue.send(:include, IssuePatch) unless Issue.include? IssuePatch
+if Rails::VERSION::MAJOR < 3
+  require 'dispatcher'
+  object_to_prepare = Dispatcher
+else
+  object_to_prepare = Rails.configuration
+end
+
+object_to_prepare.to_prepare do
+  [:issue].each do |cl|
+    require "aip_#{cl}_patch"
+  end
+
+  [ 
+    [Issue, AdditionalIssuePermissionsPlugin::IssuePatch]
+  ].each do |cl, patch|
+    cl.send(:include, patch) unless cl.included_modules.include? patch
+  end
 end
 
 Redmine::Plugin.register :redmine_additional_issue_permissions do
-  name 'Redmine Additional Issue Permissions plugin'
+  name 'Дополнительные разрешения для задач'
   author 'Roman Shipiev'
-  description 'Redmine plugin adding 21 new issue permissions (for edit issue)'
-  version '0.0.3'
+  description 'Вводятся новые разрешения для следующих полей: status, start_date, due_date, assigned_to, parent_issue, done_ratio, estimated_hours. Каждое из этих разрешений доступно в двух вариантах: для автора и для исполнителя.'
+  version '0.0.4'
   url 'https://github.com/rubynovich/redmine_additional_issue_permissions'
   author_url 'http://roman.shipiev.me'
   

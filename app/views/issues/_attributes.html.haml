@@ -1,4 +1,4 @@
-- labelled_fields_for :issue, @issue do |f|
+- form = labelled_fields_for :issue, @issue do |f|
   .splitcontent
     .splitcontentleft
       - if @issue.status_allowed?
@@ -11,7 +11,7 @@
 
       - if @issue.safe_attribute? 'priority_id'
         %p
-          = f.select :priority_id, (@priorities.collect {|p| [p.name, p.id]}), {:required => true}, :disabled => !@issue.leaf?      
+          = f.select :priority_id, (@priorities.collect {|p| [p.name, p.id]}), {:required => true}, :disabled => !@issue.leaf?
 
       - if @issue.assigned_to_allowed?
         %p
@@ -21,7 +21,7 @@
         %p
           = f.select :category_id, (@issue.project.issue_categories.collect {|c| [c.name, c.id]}), :include_blank => true
           - if User.current.allowed_to?(:manage_categories, @issue.project)
-            = prompt_to_remote(image_tag('add.png', :style => 'vertical-align: middle;'), l(:label_issue_category_new), 'issue_category[name]', {:controller => 'issue_categories', :action => 'create', :project_id => @issue.project}, :title => l(:label_issue_category_new), :tabindex => 199) 
+            = prompt_to_remote(image_tag('add.png', :style => 'vertical-align: middle;'), l(:label_issue_category_new), 'issue_category[name]', {:controller => 'issue_categories', :action => 'create', :project_id => @issue.project}, :title => l(:label_issue_category_new), :tabindex => 199)
 
 
       - if @issue.safe_attribute?('fixed_version_id') && @issue.assignable_versions.any?
@@ -58,3 +58,7 @@
 
   - if @issue.safe_attribute? 'custom_field_values'
     = render :partial => 'issues/form_custom_fields'
+
+= form if Rails::VERSION::MAJOR >= 3
+
+- include_calendar_headers_tags

@@ -40,7 +40,10 @@
         %p#parent_issue
           = f.text_field :parent_issue_id, :size => 10
           #parent_issue_candidates.autocomplete
-          = javascript_tag "observeParentIssueField('#{auto_complete_issues_path(:id => @issue, :project_id => @issue.project) }')"
+          - if Rails::VERSION::MAJOR >= 3
+            = javascript_tag "observeAutocompleteField('issue_parent_issue_id', '#{escape_javascript auto_complete_issues_path}')"
+          - else
+            = javascript_tag "observeParentIssueField('#{auto_complete_issues_path(:id => @issue, :project_id => @issue.project) }')"
 
       - if @issue.safe_attribute? 'start_date'
         %p

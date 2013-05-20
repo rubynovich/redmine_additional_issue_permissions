@@ -5,7 +5,7 @@ Redmine::Plugin.register :redmine_additional_issue_permissions do
   author 'Roman Shipiev'
   description 'The plugin add new permissions for following fields: status, start_date, due_date, assigned_to, parent_issue, done_ratio, estimated_hours. Each of these permissions is available in two variants: for author and for performer.'
   version '0.0.4'
-  url 'https://github.com/rubynovich/redmine_additional_issue_permissions'
+  url 'https://bitbucket.org/rubynovich/redmine_additional_issue_permissions'
   author_url 'http://roman.shipiev.me'
 
   project_module :issue_tracking do

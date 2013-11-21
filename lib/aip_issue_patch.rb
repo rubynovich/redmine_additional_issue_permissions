@@ -8,7 +8,32 @@ module AdditionalIssuePermissionsPlugin
       base.send(:include, InstanceMethods)
 
       base.class_eval do
+        edit_attributes = ['tracker_id',
+          'status_id',
+          'category_id',
+          'assigned_to_id',
+          'priority_id',
+          'fixed_version_id',
+          'subject',
+          'description',
+          'start_date',
+          'due_date',
+          'done_ratio',
+          'estimated_hours',
+          'custom_field_values',
+          'custom_fields',
+          'lock_version',
+          'notes']
+        @safe_attributes = @safe_attributes.reject{ |a,b| a == edit_attributes }
+        safe_attributes *edit_attributes, if: ->(issue, user) {
+          issue.new_record? || user.allowed_to?(:edit_issues, issue.project) ||
+          (issue.author == user) && user.allowed_to?(:edit_issues_4author, issue.project) ||
+          (issue.assigned_to == user) && user.allowed_to?(:edit_issues_4assigned_to, issue.project)
+        }
+
         validates_presence_of :assigned_to_id, :due_date
+        validate :validate_year_start_date, if: ->(o) { o.start_date && (o.start_date.year < Date.today.year - 1) }
+        validate :validate_year_due_date, if: ->(o) { o.due_date && (o.due_date.year < Date.today.year - 1) }
 
         safe_attributes 'status_id',
           :if => lambda {|issue, user|
@@ -94,6 +119,16 @@ module AdditionalIssuePermissionsPlugin
     end
 
     module InstanceMethods
+#      def new_record?
+#        user = User.current
+
+#        super || if user == self.author
+#          user.allowed_to?(:edit_issues_4author, self.project)
+#        elsif user == self.assigned_to
+#          user.allowed_to?(:edit_issues_4assigned_to, self.project)
+#        end
+#      end
+
       def allowed_additional_premissions?(user=User.current)
         %w{status assigned_to done_ratio start_date due_date parent_issue estimated_hours}.any?{ |field|
           (
@@ -140,6 +175,14 @@ module AdditionalIssuePermissionsPlugin
             user.allowed_to?(:edit_issues, self.project) ||
             user.allowed_to?(:edit_done_ratio, self.project)
         end
+      end
+
+      def validate_year_start_date
+        errors.add :start_date, :inclusion
+      end
+
+      def validate_year_due_date
+        errors.add :due_date, :inclusion
       end
     end
   end

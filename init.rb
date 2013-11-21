@@ -36,6 +36,9 @@ Redmine::Plugin.register :redmine_additional_issue_permissions do
     permission :edit_estimated_hours, {:issues => [:edit, :update, :bulk_edit, :bulk_update, :update_form], :journals => [:new], :attachments => :upload}
     permission :edit_estimated_hours_4author, {:issues => [:edit, :update, :bulk_edit, :bulk_update, :update_form], :journals => [:new], :attachments => :upload}
     permission :edit_estimated_hours_4assigned_to, {:issues => [:edit, :update, :bulk_edit, :bulk_update, :update_form], :journals => [:new], :attachments => :upload}
+
+    permission :edit_issues_4author, {:issues => [:edit, :update, :bulk_edit, :bulk_update, :update_form], :journals => [:new], :attachments => :upload}
+    permission :edit_issues_4assigned_to, {:issues => [:edit, :update, :bulk_edit, :bulk_update, :update_form], :journals => [:new], :attachments => :upload}
   end
 end
 
@@ -47,7 +50,7 @@ else
 end
 
 object_to_prepare.to_prepare do
-  [:issue].each do |cl|
+  [:issue, :issues_controller].each do |cl|
     require "aip_#{cl}_patch"
   end
 

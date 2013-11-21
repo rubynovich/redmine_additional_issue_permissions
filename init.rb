@@ -50,7 +50,7 @@ else
 end
 
 object_to_prepare.to_prepare do
-  [:issue, :issues_controller].each do |cl|
+  [:issue].each do |cl|
     require "aip_#{cl}_patch"
   end
 

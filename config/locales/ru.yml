@@ -28,5 +28,5 @@ ru:
   permission_edit_estimated_hours_4author: "Правка оценки времени автором"
   permission_edit_estimated_hours_4assigned_to: "Правка оценки времени исполнителем"
 
-  permission_edit_issues_4author: "Правка задачи автором"
-  permission_edit_issues_4assigned_to: "Правка задачи исполнителем"
+  permission_edit_issues_4author: "Редактирование задачи автором"
+  permission_edit_issues_4assigned_to: "Редактирование задачи исполнителем"

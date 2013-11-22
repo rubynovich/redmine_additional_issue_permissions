@@ -35,6 +35,8 @@ module AdditionalIssuePermissionsPlugin
         validate :validate_year_start_date, if: ->(o) { o.start_date && (o.start_date.year < Date.today.year - 1) }
         validate :validate_year_due_date, if: ->(o) { o.due_date && (o.due_date.year < Date.today.year - 1) }
 
+        alias_method_chain :attachments_deletable?, :author_and_assigned_to_permissions
+
         safe_attributes 'status_id',
           :if => lambda {|issue, user|
             (
@@ -119,15 +121,15 @@ module AdditionalIssuePermissionsPlugin
     end
 
     module InstanceMethods
-#      def new_record?
-#        user = User.current
-
-#        super || if user == self.author
-#          user.allowed_to?(:edit_issues_4author, self.project)
-#        elsif user == self.assigned_to
-#          user.allowed_to?(:edit_issues_4assigned_to, self.project)
-#        end
-#      end
+      def attachments_deletable_with_author_and_assigned_to_permissions?(user=User.current)
+        (respond_to?(:visible?) ? visible?(user) : true) && ((
+          (user == self.author) && user.allowed_to?(:edit_issues_4author, self.project)
+        ) || (
+          (user == self.assigned_to) && user.allowed_to?(:edit_issues_4assigned_to, self.project)
+        ) || (
+          user.allowed_to?(self.class.attachable_options[:view_permission], self.project)
+        ))
+      end
 
       def allowed_additional_premissions?(user=User.current)
         %w{status assigned_to done_ratio start_date due_date parent_issue estimated_hours}.any?{ |field|

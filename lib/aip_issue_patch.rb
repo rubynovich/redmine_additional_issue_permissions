@@ -26,9 +26,10 @@ module AdditionalIssuePermissionsPlugin
           'notes']
         @safe_attributes = @safe_attributes.reject{ |a,b| a == edit_attributes }
         safe_attributes *edit_attributes, if: ->(issue, user) {
-          issue.new_record? || user.allowed_to?(:edit_issues, issue.project) ||
-          (issue.author == user) && user.allowed_to?(:edit_issues_4author, issue.project) ||
-          (issue.assigned_to == user) && user.allowed_to?(:edit_issues_4assigned_to, issue.project)
+          issue.new_record? ||
+          ((issue.author == user) && user.allowed_to?(:edit_issues_4author, issue.project)) ||
+          ((issue.assigned_to == user) && user.allowed_to?(:edit_issues_4assigned_to, issue.project)) ||
+          user.allowed_to?(:edit_issues, issue.project)
         }
 
         validates_presence_of :assigned_to_id, :due_date

@@ -128,7 +128,7 @@ module AdditionalIssuePermissionsPlugin
         ) || (
           (user == self.assigned_to) && user.allowed_to?(:edit_issues_4assigned_to, self.project)
         ) || (
-          user.allowed_to?(self.class.attachable_options[:edit_permission], self.project)
+          user.allowed_to?(self.class.attachable_options[:delete_permission], self.project)
         ))
       end
 

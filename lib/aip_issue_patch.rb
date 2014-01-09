@@ -33,8 +33,8 @@ module AdditionalIssuePermissionsPlugin
         }
 
         validates_presence_of :assigned_to_id, :due_date
-        validate :validate_year_start_date, if: ->(o) { o.start_date && (o.start_date.year < Date.today.year - 1) }
-        validate :validate_year_due_date, if: ->(o) { o.due_date && (o.due_date.year < Date.today.year - 1) }
+        validate :validate_year_start_date, if: ->(o) { o.start_date && ((o.start_date.year - Date.today.year).abs > 2) }
+        validate :validate_year_due_date,   if: ->(o) { o.due_date   && ((o.due_date.year - Date.today.year).abs > 2)   }
 
         alias_method_chain :attachments_deletable?, :author_and_assigned_to_permissions
 

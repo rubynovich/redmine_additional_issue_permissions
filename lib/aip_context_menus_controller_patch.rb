@@ -8,7 +8,7 @@ module AdditionalIssuePermissionsPlugin
     end
 
     def issues_with_additional_permissions
-      @issues = Issue.visible.where(id: params[:ids]).includes(:project)
+      @issues = Issue.visible.where(id: params[:ids]).includes(:project).all
       (render_404; return) unless @issues.present?
       if (@issues.size == 1)
         @issue = @issues.first

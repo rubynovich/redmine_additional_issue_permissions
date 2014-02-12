@@ -20,10 +20,11 @@ module AdditionalIssuePermissionsPlugin
       @project = @projects.first if @projects.size == 1
 
       edit_permission = @issues.all?(&:edit_issues_permission)
+      status_permission = @issues.all?(&:status_allowed?)
 
       @can = {edit: edit_permission,
               log_time: (@project && User.current.allowed_to?(:log_time, @project)),
-              update: (edit_permission || (User.current.allowed_to?(:change_status, @projects) && !@allowed_statuses.blank?)),
+              update: (edit_permission || (status_permission && @allowed_statuses.present?)),
               move: (@project && User.current.allowed_to?(:move_issues, @project)),
               copy: (@issue && @project.trackers.include?(@issue.tracker) && User.current.allowed_to?(:add_issues, @project)),
               delete: User.current.allowed_to?(:delete_issues, @projects)
